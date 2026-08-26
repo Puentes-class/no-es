@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>El Impostor Astronómico: Duelo por Equipos 🌌</title>
+  <title>¿Cuál no es?: Duelo por Equipos 🌌</title>
   <style>
     * {
       box-sizing: border-box;
@@ -212,7 +212,7 @@
     
     <!-- 1. PANTALLA DE REGISTRO DE EQUIPOS -->
     <div id="setup-screen" class="setup-screen">
-      <h1>🚀 El Impostor Astronómico</h1>
+      <h1>🚀 ¿Cuál no es?</h1>
       <p class="instructions">Ingresa los nombres de los equipos competidores:</p>
       
       <div>
@@ -228,7 +228,7 @@
 
     <!-- 2. PANTALLA DEL JUEGO -->
     <div id="quiz-screen" style="display: none;">
-      <h1>🚀 El Impostor Astronómico</h1>
+      <h1>🚀 ¿Cuál no es?</h1>
       <p class="instructions">¡Encuentra la opción que <strong>NO CORRESPONDE</strong>!</p>
 
       <div class="header-status">
@@ -319,7 +319,7 @@
     
     // Variables para el temporizador
     let timerInterval = null;
-    let timeLeft = 40;
+    let timeLeft = 20;
 
     function startGame() {
       const t1Input = document.getElementById('input-t1').value.trim();
@@ -341,7 +341,7 @@
 
     function startTimer() {
       clearInterval(timerInterval);
-      timeLeft = 40;
+      timeLeft = 20;
       const timerDisplay = document.getElementById('timer');
       timerDisplay.innerText = `${timeLeft}s`;
       timerDisplay.classList.remove('danger');
@@ -350,7 +350,7 @@
         timeLeft--;
         timerDisplay.innerText = `${timeLeft}s`;
 
-        if (timeLeft <= 10) {
+        if (timeLeft <=5) {
           timerDisplay.classList.add('danger');
         }
 
