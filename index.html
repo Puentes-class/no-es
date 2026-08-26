@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>El Impostor Astronómico: Duelo por Equipos 🌌</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #0d1117;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .quiz-container {
+      background: #161b22;
+      border: 1px solid #30363d;
+      border-radius: 12px;
+      max-width: 680px;
+      width: 100%;
+      padding: 25px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+
+    h1 {
+      color: #58a6ff;
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    .instructions {
+      color: #8b949e;
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    /* Pantalla de Inicio (Formulario) */
+    .setup-screen input {
+      width: 80%;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    /* Marcador y Cronómetro */
+    .header-status {
+      display: grid;
+      grid-template-columns: 2fr 1fr 2fr;
+      align-items: center;
+      gap: 10px;
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 10px;
+      margin-bottom: 15px;
+    }
+
+    .team-score {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6px;
+      border-radius: 6px;
+    }
+
+    .team-name {
+      font-size: 0.9rem;
+      color: #8b949e;
+      font-weight: bold;
+    }
+
+    .team-points {
+      font-size: 1.3rem;
+      color: #58a6ff;
+      font-weight: bold;
+    }
+
+    .active-turn {
+      border: 2px solid #f29d00 !important;
+      background: #1c1917;
+    }
+
+    .timer-box {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #f29d00;
+      background: #21262d;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid #30363d;
+    }
+
+    .timer-box.danger {
+      color: #f85149;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.5; }
+      100% { opacity: 1; }
+    }
+
+    .progress {
+      background: #21262d;
+      padding: 6px 14px;
+      border-radius: 20px;
+      display: inline-block;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+      color: #c9d1d9;
+    }
+
+    .question-box {
+      background: #0d1117;
+      border: 1px solid #30363d;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+      line-height: 1.4;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .btn-option {
+      background: #21262d;
+      border: 2px solid #30363d;
+      color: #ffffff;
+      padding: 15px 10px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-option:hover:not(:disabled) {
+      border-color: #58a6ff;
+      background: #1f6feb;
+    }
+
+    .btn-option.correct {
+      background-color: #238636 !important;
+      border-color: #2ea043 !important;
+    }
+
+    .btn-option.incorrect {
+      background-color: #da3633 !important;
+      border-color: #f85149 !important;
+    }
+
+    .explanation-box {
+      display: none;
+      background: #1c2128;
+      border-left: 4px solid #58a6ff;
+      padding: 12px;
+      border-radius: 4px;
+      text-align: left;
+      font-size: 0.9rem;
+      color: #c9d1d9;
+      margin-bottom: 20px;
+    }
+
+    .btn-next {
+      background: #238636;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 0 auto;
+    }
+
+    .btn-next:hover {
+      background: #2ea043;
+    }
+
+    @media (max-width: 500px) {
+      .options-grid { grid-template-columns: 1fr; }
+      .header-status { grid-template-columns: 1fr; gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    
+    <!-- 1. PANTALLA DE REGISTRO DE EQUIPOS -->
+    <div id="setup-screen" class="setup-screen">
+      <h1>🚀 El Impostor Astronómico</h1>
+      <p class="instructions">Ingresa los nombres de los equipos competidores:</p>
+      
+      <div>
+        <input type="text" id="input-t1" placeholder="Nombre Equipo 1" value="Equipo Alfa">
+      </div>
+      <div>
+        <input type="text" id="input-t2" placeholder="Nombre Equipo 2" value="Equipo Beta">
+      </div>
+      
+      <br>
+      <button class="btn-next" style="display: inline-block; margin-top: 15px;" onclick="startGame()">¡Comenzar Duelo!</button>
+    </div>
+
+    <!-- 2. PANTALLA DEL JUEGO -->
+    <div id="quiz-screen" style="display: none;">
+      <h1>🚀 El Impostor Astronómico</h1>
+      <p class="instructions">¡Encuentra la opción que <strong>NO CORRESPONDE</strong>!</p>
+
+      <div class="header-status">
+        <div class="team-score" id="team1-box">
+          <span class="team-name" id="name-t1">Equipo 1</span>
+          <span class="team-points" id="pts-t1">0 pts</span>
+        </div>
+        
+        <div class="timer-box" id="timer">40s</div>
+
+        <div class="team-score" id="team2-box">
+          <span class="team-name" id="name-t2">Equipo 2</span>
+          <span class="team-points" id="pts-t2">0 pts</span>
+        </div>
+      </div>
+      
+      <div class="progress">Pregunta <span id="current-q">1</span> de 30</div>
+
+      <div class="question-box" id="question-text">
+        Cargando pregunta...
+      </div>
+
+      <div class="options-grid">
+        <button class="btn-option" id="opt-a" onclick="checkAnswer(0)"></button>
+        <button class="btn-option" id="opt-b" onclick="checkAnswer(1)"></button>
+      </div>
+
+      <div class="explanation-box" id="explanation"></div>
+
+      <button class="btn-next" id="next-btn" style="display: none;" onclick="nextQuestion()">Siguiente Pregunta</button>
+    </div>
+
+    <!-- 3. PANTALLA DE RESULTADOS -->
+    <div class="results" id="results-screen" style="display: none;">
+      <h2>🎉 ¡Fin de la Competencia!</h2>
+      <p style="margin-top: 15px;">Puntaje Final:</p>
+      <div style="font-size: 1.5rem; margin: 15px 0; color: #58a6ff;">
+        <p><span id="res-t1-name">Equipo 1</span>: <strong id="res-t1-pts">0</strong> pts</p>
+        <p><span id="res-t2-name">Equipo 2</span>: <strong id="res-t2-pts">0</strong> pts</p>
+      </div>
+      <h3 id="winner-text" style="color: #3fb950; margin-bottom: 20px;"></h3>
+      <button class="btn-next" style="display: inline-block;" onclick="restartSetup()">Jugar Otra Vez</button>
+    </div>
+
+  </div>
+
+  <script>
+    const questions = [
+      { question: "Son figuras imaginarias creadas al unir estrellas visibles en el cielo nocturno:", options: ["Nebulosas", "Constelaciones"], wrongIndex: 0, exp: "Las Nebulosas son nubes de gas y polvo; las Constelaciones son los trazos imaginarios en el cielo." },
+      { question: "Cuerpo celeste que emite su propia luz y calor mediante reacciones nucleares:", options: ["Estrella", "Planeta"], wrongIndex: 1, exp: "Los planetas reflejan la luz de sus estrellas, no generan luz propia por fusión nuclear." },
+      { question: "Es una enorme nube de gas y polvo cósmico donde nacen las estrellas:", options: ["Nebulosa", "Cometa"], wrongIndex: 1, exp: "Un cometa es un cuerpo pequeño de hielo y roca, no una gran cuna estelar de gas." },
+      { question: "Planeta conocido popularmente como 'El Planeta Rojo':", options: ["Júpiter", "Marte"], wrongIndex: 0, exp: "Marte es el planeta rojo debido al óxido de hierro en su superficie." },
+      { question: "Cuerpo helado que al acercarse al Sol forma una brillante cola gaseosa:", options: ["Cometa", "Asteroide metálico"], wrongIndex: 1, exp: "Los asteroides metálicos/rocosos no poseen los hielos volátiles necesarios para formar colas." },
+      { question: "Instrumento óptico diseñado para capturar luz y observar objetos lejanos:", options: ["Microscopio", "Telescopio"], wrongIndex: 0, exp: "El microscopio sirve para observar objetos microscópicos cercanos." },
+      { question: "Región del espacio con una fuerza de gravedad tan extrema que ni la luz escapa:", options: ["Agujero Negro", "Supernova"], wrongIndex: 1, exp: "Una supernova es la explosión masiva de una estrella, no una región de atrapamiento gravitacional." },
+      { question: "Satélite natural que orbita alrededor del planeta Tierra:", options: ["Luna", "Titán"], wrongIndex: 1, exp: "Titán es la luna más grande de Saturno, no de la Tierra." },
+      { question: "Planeta del sistema solar famoso por poseer el sistema de anillos más vistoso:", options: ["Saturno", "Mercurio"], wrongIndex: 1, exp: "Mercurio es un planeta rocoso pequeño sin ningún anillo." },
+      { question: "Enorme conjunto estructurado de miles de millones de estrellas, gas y materia oscura:", options: ["Cúmulo abierto", "Galaxia"], wrongIndex: 0, exp: "Un cúmulo abierto contiene cientos o pocos miles de estrellas; las galaxias contienen miles de millones." },
+      { question: "Ocurre cuando la Luna se interpone exactamente entre el Sol y la Tierra:", options: ["Eclipse Solar", "Eclipse Lunar"], wrongIndex: 1, exp: "En el Eclipse Lunar, es la Tierra la que se interpone entre el Sol y la Luna." },
+      { question: "Planeta con la temperatura media más alta del Sistema Solar debido a su efecto invernadero:", options: ["Mercurio", "Venus"], wrongIndex: 0, exp: "Aunque Mercurio está más cerca del Sol, Venus es más caliente debido a su densa atmósfera de CO₂." },
+      { question: "Destello luminoso provocado por un pequeño fragmento rocoso al desintegrarse en la atmósfera:", options: ["Meteoro (Estrella fugaz)", "Supernova"], wrongIndex: 1, exp: "Una supernova ocurre en el espacio profundo por la muerte de una estrella masiva." },
+      { question: "Planeta gigante gaseoso que posee la famosa 'Gran Mancha Roja' (una tormenta gigante):", options: ["Júpiter", "Neptuno"], wrongIndex: 1, exp: "La Gran Mancha Roja es la tormenta icónica de Júpiter." },
+      { question: "La galaxia espiral en la cual se encuentra ubicado nuestro Sistema Solar:", options: ["Andrómeda", "Vía Láctea"], wrongIndex: 0, exp: "Andrómeda es nuestra galaxia vecina gigante más cercana, pero vivimos en la Vía Láctea." },
+      { question: "Fuerza fundamental encargada de mantener a los planetas orbitando alrededor del Sol:", options: ["Electromagnetismo", "Gravedad"], wrongIndex: 0, exp: "La gravedad regula el movimiento de los cuerpos celestes a gran escala." },
+      { question: "Planeta caracterizado por girar 'acostado', con su eje de rotación inclinado casi 98°:", options: ["Urano", "Tierra"], wrongIndex: 1, exp: "La Tierra tiene una inclinación de ~23.5°; Urano es el que gira prácticamente de lado." },
+      { question: "Luces brillantes y de colores que ocurren cerca de los polos magnéticos planetarios:", options: ["Auroras", "Cinturón de Asteroides"], wrongIndex: 1, exp: "El Cinturón de Asteroides es una región entre Marte y Júpiter repleta de rocas celestes." },
+      { question: "Estrella supergigante roja ubicada en la constelación de Orión:", options: ["Betelgeuse", "Sirio"], wrongIndex: 1, exp: "Sirio es una estrella blanca muy brillante en la constelación de Can Mayor." },
+      { question: "Concepto que define el tiempo que tarda la Tierra en dar una vuelta completa al Sol:", options: ["Año (Translación)", "Día (Rotación)"], wrongIndex: 1, exp: "La rotación sobre su propio eje define el día (24 hrs); el giro alrededor del Sol define el año." },
+      { question: "Cuerpo calificado como 'Planeta Enano' ubicado en el Cinturón de Kuiper:", options: ["Plutón", "Ganimedes"], wrongIndex: 1, exp: "Ganimedes es la luna más grande de Júpiter, no un planeta enano." },
+      { question: "Tipo de radiación o señal electromagnética usada por los radiotelescopios para observar el cosmos:", options: ["Ondas de Radio", "Ultrasonido"], wrongIndex: 1, exp: "El sonido no se propaga en el vacío del espacio; la astronomía usa ondas electromagnéticas." },
+      { question: "Objeto denso que gira a altísima velocidad y emite pulsos periódicos de radiación:", options: ["Púlsar", "Exoplaneta"], wrongIndex: 1, exp: "Un exoplaneta es simplemente un planeta fuera de nuestro sistema solar." },
+      { question: "Nombre del telescopio espacial lanzado en 2021 especializado en observación infrarroja:", options: ["James Webb (JWST)", "Sputnik 1"], wrongIndex: 1, exp: "Sputnik 1 fue el primer satélite artificial puesto en órbita por la humanidad en 1957." },
+      { question: "Es el planeta del Sistema Solar con los vientos atmosféricos más veloces (supersónicos):", options: ["Neptuno", "Tierra"], wrongIndex: 1, exp: "Neptuno registra los vientos más violentos del Sistema Solar (más de 2,000 km/h)." },
+      { question: "Estructura rocosa gigante que separa las órbitas de los planetas rocosos de los gaseosos:", options: ["Cinturón Principal de Asteroides", "Nube de Oort"], wrongIndex: 1, exp: "La Nube de Oort está en los confines extremos del Sistema Solar, mucho más allá de Plutón." },
+      { question: "Es la estrella más brillante del cielo nocturno vista desde la Tierra:", options: ["Sirio", "Polaris (Estrella del Norte)"], wrongIndex: 1, exp: "Polaris es famosa por marcar el norte, pero Sirio es técnicamente mucho más brillante en nuestro cielo." },
+      { question: "Fase lunar en la que la cara visible de la Luna está completamente iluminada por el Sol:", options: ["Luna Nueva", "Luna Llena"], wrongIndex: 0, exp: "En la Luna Nueva, la cara visible queda a oscuras desde la Tierra." },
+      { question: "Cielos u objetos celestes que orbitan alrededor de una estrella diferente a nuestro Sol:", options: ["Exoplanetas", "Meteoritos"], wrongIndex: 1, exp: "Los meteoritos son fragmentos de roca que caen a la superficie terrestre." },
+      { question: "Capa externa y visible del Sol desde la cual se emite la mayor parte de su luz:", options: ["Fotosfera", "Núcleo terrestre"], wrongIndex: 1, exp: "El núcleo terrestre es el centro de nuestro propio planeta." }
+    ];
+
+    let currentQuestionIndex = 0;
+    let scoreT1 = 0;
+    let scoreT2 = 0;
+    let currentTurn = 1;
+    let team1Name = "Equipo 1";
+    let team2Name = "Equipo 2";
+    
+    // Variables para el temporizador
+    let timerInterval = null;
+    let timeLeft = 40;
+
+    function startGame() {
+      const t1Input = document.getElementById('input-t1').value.trim();
+      const t2Input = document.getElementById('input-t2').value.trim();
+
+      if (t1Input) team1Name = t1Input;
+      if (t2Input) team2Name = t2Input;
+
+      document.getElementById('name-t1').innerText = team1Name;
+      document.getElementById('name-t2').innerText = team2Name;
+      document.getElementById('res-t1-name').innerText = team1Name;
+      document.getElementById('res-t2-name').innerText = team2Name;
+
+      document.getElementById('setup-screen').style.display = 'none';
+      document.getElementById('quiz-screen').style.display = 'block';
+
+      loadQuestion();
+    }
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timeLeft = 40;
+      const timerDisplay = document.getElementById('timer');
+      timerDisplay.innerText = `${timeLeft}s`;
+      timerDisplay.classList.remove('danger');
+
+      timerInterval = setInterval(() => {
+        timeLeft--;
+        timerDisplay.innerText = `${timeLeft}s`;
+
+        if (timeLeft <= 10) {
+          timerDisplay.classList.add('danger');
+        }
+
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          handleTimeOut();
+        }
+      }, 1000);
+    }
+
+    function handleTimeOut() {
+      const q = questions[currentQuestionIndex];
+      const btnA = document.getElementById('opt-a');
+      const btnB = document.getElementById('opt-b');
+      const expBox = document.getElementById('explanation');
+
+      btnA.disabled = true;
+      btnB.disabled = true;
+
+      (q.wrongIndex === 0 ? btnA : btnB).classList.add('correct');
+      expBox.innerHTML = `<strong>⏰ ¡Tiempo agotado! No hay punto para nadie.</strong><br>${q.exp}`;
+      expBox.style.borderLeftColor = "#f29d00";
+      expBox.style.display = 'block';
+      
+      document.getElementById('next-btn').style.display = 'inline-block';
+    }
+
+    function loadQuestion() {
+      const q = questions[currentQuestionIndex];
+      document.getElementById('current-q').innerText = currentQuestionIndex + 1;
+      document.getElementById('question-text').innerText = `"${q.question}"`;
+      
+      const btnA = document.getElementById('opt-a');
+      const btnB = document.getElementById('opt-b');
+      
+      btnA.innerText = `A) ${q.options[0]}`;
+      btnB.innerText = `B) ${q.options[1]}`;
+      
+      btnA.className = 'btn-option';
+      btnB.className = 'btn-option';
+      btnA.disabled = false;
+      btnB.disabled = false;
+      
+      document.getElementById('explanation').style.display = 'none';
+      document.getElementById('next-btn').style.display = 'none';
+
+      const activeTeamName = (currentTurn === 1) ? team1Name : team2Name;
+      
+      if (currentTurn === 1) {
+        document.getElementById('team1-box').classList.add('active-turn');
+        document.getElementById('team2-box').classList.remove('active-turn');
+      } else {
+        document.getElementById('team2-box').classList.add('active-turn');
+        document.getElementById('team1-box').classList.remove('active-turn');
+      }
+
+      startTimer();
+    }
+
+    function checkAnswer(selectedIndex) {
+      clearInterval(timerInterval); // Detener reloj al responder
+
+      const q = questions[currentQuestionIndex];
+      const btnA = document.getElementById('opt-a');
+      const btnB = document.getElementById('opt-b');
+      const expBox = document.getElementById('explanation');
+      
+      btnA.disabled = true;
+      btnB.disabled = true;
+
+      const isCorrect = (selectedIndex === q.wrongIndex);
+      const activeName = (currentTurn === 1) ? team1Name : team2Name;
+
+      if (isCorrect) {
+        if (currentTurn === 1) scoreT1++;
+        else scoreT2++;
+        (selectedIndex === 0 ? btnA : btnB).classList.add('correct');
+        expBox.innerHTML = `<strong>¡Correcto! (Punto para ${activeName})</strong><br>${q.exp}`;
+        expBox.style.borderLeftColor = "#2ea043";
+      } else {
+        (selectedIndex === 0 ? btnA : btnB).classList.add('incorrect');
+        (q.wrongIndex === 0 ? btnA : btnB).classList.add('correct');
+        expBox.innerHTML = `<strong>¡Pataron! No hay punto.</strong><br>${q.exp}`;
+        expBox.style.borderLeftColor = "#f85149";
+      }
+
+      document.getElementById('pts-t1').innerText = `${scoreT1} pts`;
+      document.getElementById('pts-t2').innerText = `${scoreT2} pts`;
+
+      expBox.style.display = 'block';
+      document.getElementById('next-btn').style.display = 'inline-block';
+    }
+
+    function nextQuestion() {
+      currentQuestionIndex++;
+      currentTurn = (currentTurn === 1) ? 2 : 1;
+
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      clearInterval(timerInterval);
+      document.getElementById('quiz-screen').style.display = 'none';
+      const resultsScreen = document.getElementById('results-screen');
+      resultsScreen.style.display = 'block';
+
+      document.getElementById('res-t1-pts').innerText = scoreT1;
+      document.getElementById('res-t2-pts').innerText = scoreT2;
+
+      const winText = document.getElementById('winner-text');
+      if (scoreT1 > scoreT2) {
+        winText.innerText = `🏆 ¡Ganador: ${team1Name}!`;
+      } else if (scoreT2 > scoreT1) {
+        winText.innerText = `🏆 ¡Ganador: ${team2Name}!`;
+      } else {
+        winText.innerText = "🤝 ¡Empate Estelar!";
+      }
+    }
+
+    function restartSetup() {
+      currentQuestionIndex = 0;
+      scoreT1 = 0;
+      scoreT2 = 0;
+      currentTurn = 1;
+      document.getElementById('pts-t1').innerText = `0 pts`;
+      document.getElementById('pts-t2').innerText = `0 pts`;
+      document.getElementById('results-screen').style.display = 'none';
+      document.getElementById('setup-screen').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
