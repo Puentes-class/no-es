@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¿Cuál no es?: Duelo por Equipos 🌌</title>
+  <title>El Impostor Astronómico: Duelo por Equipos 🌌</title>
   <style>
     * {
       box-sizing: border-box;
@@ -212,7 +212,7 @@
     
     <!-- 1. PANTALLA DE REGISTRO DE EQUIPOS -->
     <div id="setup-screen" class="setup-screen">
-      <h1>🚀 ¿Cuál no es? </h1>
+      <h1>🚀 El Impostor Astronómico</h1>
       <p class="instructions">Ingresa los nombres de los equipos competidores:</p>
       
       <div>
@@ -228,7 +228,7 @@
 
     <!-- 2. PANTALLA DEL JUEGO -->
     <div id="quiz-screen" style="display: none;">
-      <h1>🚀 ¿Cuál no es?</h1>
+      <h1>🚀 El Impostor Astronómico</h1>
       <p class="instructions">¡Encuentra la opción que <strong>NO CORRESPONDE</strong>!</p>
 
       <div class="header-status">
@@ -237,7 +237,7 @@
           <span class="team-points" id="pts-t1">0 pts</span>
         </div>
         
-        <div class="timer-box" id="timer">20s</div>
+        <div class="timer-box" id="timer">40s</div>
 
         <div class="team-score" id="team2-box">
           <span class="team-name" id="name-t2">Equipo 2</span>
@@ -299,15 +299,16 @@
       { question: "Concepto que define el tiempo que tarda la Tierra en dar una vuelta completa al Sol:", options: ["Año (Translación)", "Día (Rotación)"], wrongIndex: 1, exp: "La rotación sobre su propio eje define el día (24 hrs); el giro alrededor del Sol define el año." },
       { question: "Cuerpo calificado como 'Planeta Enano' ubicado en el Cinturón de Kuiper:", options: ["Plutón", "Ganimedes"], wrongIndex: 1, exp: "Ganimedes es la luna más grande de Júpiter, no un planeta enano." },
       { question: "Fue el primer hombre en pisar la superficie de la Luna:", options: ["Tesla", "Armstrong"], wrongIndex: 0, exp: "Nikola Tesla fue un inventor e ingeniero, no un astronauta." },
-      { question: "Es la misión espacial lanzada en abril de este año:", options: ["Apolo 17", "Artemis II"], wrongIndex: 0, exp: "Apolo 17 fue la última misión de la carrera espacial iniciada en la guerra fría." },
-      { question: "Fue la primera misión en fallar después de la llegada del hombre a la Luna:", options: ["Apolo 1", "Apolo 13"], wrongIndex: 1, exp: "Apolo 1 fue la primera misión fallida y ocurrió antes de la llegada a la Luna" },
+      { question: "Es la misión espacial lanzada en abril de este año:", options: ["Apolo 17", "Artemis II"], wrongIndex: 0, exp: "Apolo 17 fue la última misión del programa Apolo en 1972, no una misión reciente." },
+      { question: "Fue la primera misión en fallar después de la llegada del hombre a la Luna:", options: ["Apolo 1", "Apolo 13"], wrongIndex: 0, exp: "Apolo 1 ocurrió antes de la llegada a la Luna; Apolo 13 fue la que sufrió la falla tras el alunizaje del Apolo 11." },
       { question: "Es el planeta del Sistema Solar con los vientos atmosféricos más veloces (supersónicos):", options: ["Neptuno", "Tierra"], wrongIndex: 1, exp: "Neptuno registra los vientos más violentos del Sistema Solar (más de 2,000 km/h)." },
       { question: "Estructura rocosa gigante en forma de anillo que separa las órbitas de los planetas rocosos de los gaseosos:", options: ["Cinturón Principal de Asteroides", "Nube de Oort"], wrongIndex: 1, exp: "La Nube de Oort está en los confines extremos del Sistema Solar, mucho más allá de Plutón." },
-      { question: "Es la fase de la Luna en que está completamente iluminada:", options: ["Nueva", "Llena"], wrongIndex: 1, exp: "La Luna nueva es cuando no podemos verla porque no está iluminada por el Sol." },
-      { question: "Fase lunar en la que la cara visible de la Luna está iluminada a la mitad y forma una D:", options: ["Luna Menguante", "Luna Creciente"], wrongIndex: 1, exp: "En la Luna Creciente, la cara visible queda formando una C." },
+      { question: "Es la fase de la Luna en que está completamente iluminada:", options: ["Nueva", "Llena"], wrongIndex: 0, exp: "La Luna nueva es la fase en que la cara visible queda a oscuras desde la Tierra." },
+      { question: "Fase lunar en la que la cara visible de la Luna está iluminada a la mitad y forma una D (visto desde el H. Norte):", options: ["Luna Menguante", "Luna Creciente"], wrongIndex: 0, exp: "La Luna Menguante es la opción incorrecta aquí." },
       { question: "Son cuerpos celestes que orbitan alrededor de una estrella diferente a nuestro Sol:", options: ["Exoplanetas", "Meteoritos"], wrongIndex: 1, exp: "Los meteoritos son fragmentos de roca que caen a la superficie terrestre." },
-      { question: "Primer satélite en orbitar la Tierra con éxito:", options: ["Satarlink", "Sputnik 1"], wrongIndex: 0, exp: "Sputnik 1 fue el primer satélite artificial puesto en órbita por la humanidad en 1957." }
+      { question: "Primer satélite en orbitar la Tierra con éxito:", options: ["Starlink", "Sputnik 1"], wrongIndex: 0, exp: "Starlink es una constelación moderna de satélites; Sputnik 1 fue el primero en 1957." }
     ];
+</script>
 
     let currentQuestionIndex = 0;
     let scoreT1 = 0;
