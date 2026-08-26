@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>¿Cuál no es?: Duelo por Equipos 🌌</title>
+  <title>El Impostor Astronómico: Duelo por Equipos 🌌</title>
   <style>
     * {
       box-sizing: border-box;
@@ -212,7 +212,7 @@
     
     <!-- 1. PANTALLA DE REGISTRO DE EQUIPOS -->
     <div id="setup-screen" class="setup-screen">
-      <h1>🚀 ¿Cuál no es?</h1>
+      <h1>🚀 El Impostor Astronómico</h1>
       <p class="instructions">Ingresa los nombres de los equipos competidores:</p>
       
       <div>
@@ -228,7 +228,7 @@
 
     <!-- 2. PANTALLA DEL JUEGO -->
     <div id="quiz-screen" style="display: none;">
-      <h1>🚀 ¿Cuál no es?</h1>
+      <h1>🚀 El Impostor Astronómico</h1>
       <p class="instructions">¡Encuentra la opción que <strong>NO CORRESPONDE</strong>!</p>
 
       <div class="header-status">
@@ -275,7 +275,7 @@
 
   </div>
 
-  <script>
+  <<script>
     const questions = [
       { question: "Son figuras imaginarias creadas al unir estrellas visibles en el cielo nocturno:", options: ["Nebulosas", "Constelaciones"], wrongIndex: 0, exp: "Las Nebulosas son nubes de gas y polvo; las Constelaciones son los trazos imaginarios en el cielo." },
       { question: "Cuerpo celeste que emite su propia luz y calor mediante reacciones nucleares:", options: ["Estrella", "Planeta"], wrongIndex: 1, exp: "Los planetas reflejan la luz de sus estrellas, no generan luz propia por fusión nuclear." },
@@ -304,11 +304,10 @@
       { question: "Es el planeta del Sistema Solar con los vientos atmosféricos más veloces (supersónicos):", options: ["Neptuno", "Tierra"], wrongIndex: 1, exp: "Neptuno registra los vientos más violentos del Sistema Solar (más de 2,000 km/h)." },
       { question: "Estructura rocosa gigante en forma de anillo que separa las órbitas de los planetas rocosos de los gaseosos:", options: ["Cinturón Principal de Asteroides", "Nube de Oort"], wrongIndex: 1, exp: "La Nube de Oort está en los confines extremos del Sistema Solar, mucho más allá de Plutón." },
       { question: "Es la fase de la Luna en que está completamente iluminada:", options: ["Nueva", "Llena"], wrongIndex: 0, exp: "La Luna nueva es la fase en que la cara visible queda a oscuras desde la Tierra." },
-      { question: "Fase lunar en la que la cara visible de la Luna está iluminada a la mitad y forma una D:", options: ["Luna Menguante", "Luna Creciente"], wrongIndex: 1, exp: "La Luna Menguante es la que forma una D y la Creciente una C." },
+      { question: "Fase lunar en la que la cara visible de la Luna está iluminada a la mitad y forma una D (visto desde el H. Sur):", options: ["Luna Menguante", "Luna Creciente"], wrongIndex: 1, exp: "La Luna Menguante es la opción incorrecta aquí." },
       { question: "Son cuerpos celestes que orbitan alrededor de una estrella diferente a nuestro Sol:", options: ["Exoplanetas", "Meteoritos"], wrongIndex: 1, exp: "Los meteoritos son fragmentos de roca que caen a la superficie terrestre." },
       { question: "Primer satélite en orbitar la Tierra con éxito:", options: ["Starlink", "Sputnik 1"], wrongIndex: 0, exp: "Starlink es una constelación moderna de satélites; Sputnik 1 fue el primero en 1957." }
     ];
-</script>
 
     let currentQuestionIndex = 0;
     let scoreT1 = 0;
@@ -341,7 +340,7 @@
 
     function startTimer() {
       clearInterval(timerInterval);
-      timeLeft = 20;
+      timeLeft = 40;
       const timerDisplay = document.getElementById('timer');
       timerDisplay.innerText = `${timeLeft}s`;
       timerDisplay.classList.remove('danger');
@@ -350,7 +349,7 @@
         timeLeft--;
         timerDisplay.innerText = `${timeLeft}s`;
 
-        if (timeLeft <=5) {
+        if (timeLeft <= 10) {
           timerDisplay.classList.add('danger');
         }
 
