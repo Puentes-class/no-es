@@ -304,7 +304,7 @@
       { question: "Es el planeta del Sistema Solar con los vientos atmosféricos más veloces (supersónicos):", options: ["Neptuno", "Tierra"], wrongIndex: 1, exp: "Neptuno registra los vientos más violentos del Sistema Solar (más de 2,000 km/h)." },
       { question: "Estructura rocosa gigante en forma de anillo que separa las órbitas de los planetas rocosos de los gaseosos:", options: ["Cinturón Principal de Asteroides", "Nube de Oort"], wrongIndex: 1, exp: "La Nube de Oort está en los confines extremos del Sistema Solar, mucho más allá de Plutón." },
       { question: "Es la fase de la Luna en que está completamente iluminada:", options: ["Nueva", "Llena"], wrongIndex: 0, exp: "La Luna nueva es la fase en que la cara visible queda a oscuras desde la Tierra." },
-      { question: "Fase lunar en la que la cara visible de la Luna está iluminada a la mitad y forma una D (visto desde el H. Norte):", options: ["Luna Menguante", "Luna Creciente"], wrongIndex: 0, exp: "La Luna Menguante es la opción incorrecta aquí." },
+      { question: "Fase lunar en la que la cara visible de la Luna está iluminada a la mitad y forma una D:", options: ["Luna Menguante", "Luna Creciente"], wrongIndex: 1, exp: "La Luna Menguante es la que forma una D y la Creciente una C." },
       { question: "Son cuerpos celestes que orbitan alrededor de una estrella diferente a nuestro Sol:", options: ["Exoplanetas", "Meteoritos"], wrongIndex: 1, exp: "Los meteoritos son fragmentos de roca que caen a la superficie terrestre." },
       { question: "Primer satélite en orbitar la Tierra con éxito:", options: ["Starlink", "Sputnik 1"], wrongIndex: 0, exp: "Starlink es una constelación moderna de satélites; Sputnik 1 fue el primero en 1957." }
     ];
@@ -319,7 +319,7 @@
     
     // Variables para el temporizador
     let timerInterval = null;
-    let timeLeft = 20;
+    let timeLeft = 40;
 
     function startGame() {
       const t1Input = document.getElementById('input-t1').value.trim();
